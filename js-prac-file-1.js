@@ -1,6 +1,3 @@
-type: "module"
-import { access } from "node:fs";
-
 const tasks = [
   { id: 1, title: "Setup Mongo", done: true, price: 100, priority: "high" },
   { id: 2, title: "Create Express API", done: false, price: 200, priority: "medium" },
@@ -13,19 +10,27 @@ const user = { id: 101, name: "Suman", email: "suman@test.com", role: "developer
 const frontendStack = ["React", "Next.js"];
 const backendStack = ["Node.js", "Express"];
 
-const completedTasks = tasks.filter(task => task.done === true)
-console.log("Completed tasks - ",completedTasks)
+// 1. Basic Array Methods
+const completedTasks = tasks.filter(task => task.done);
+const taskTitles = tasks.map(task => task.title);
+const highPriortyTask = tasks.find(task => task.priority === "high");
 
-const taskTitles = tasks.map(task => task.title)
-console.log("List of Task Titles: \n",taskTitles) 
+// 2. Reduce Exercises
+const totalPrice = tasks.reduce((acc, current) => acc + (current.price || 0), 0);
 
-const highPriortyTask = tasks.find(task => task.priority === "high")
-console.log("High Priority Task - ",highPriortyTask) 
+const completedTitles = tasks.reduce((acc, task) => {
+  if (task.done) acc.push(task.title);
+  return acc;
+}, []);
 
+const countByPriority = tasks.reduce((acc, curnt) => {
+  acc[curnt.priority] = (acc[curnt.priority] || 0) + 1;
+  return acc;
+}, {});
 
-// Reduce Excersise
+// 3. Destructuring & Renaming
+const { name, email: mail } = user;
 
-const TotalPrice = tasks.reduce((accumulator,current)=>{
-return accumulator + (current.price || 0)
-},0 )
-console.log("Total- ",TotalPrice)
+// 4. Spread Operations
+const updateuser = { ...user, role: "lead" };
+const fullStack = [...frontendStack, ...backendStack];
